@@ -11,19 +11,27 @@ except ImportError:
 DOCUMENTATION = '''
 ---
 module: varnishadm
-short_description: Control varnish
+short_description: Control varnish using varnishadm
 description:
   - Control varnish
 options:
   secret:
+    description:
+      - Path to the varnish secret file
     required: false
     default: /etc/varnish/secret
     aliases: []
   backend:
+    description:
+      - The name of the backend to change
     required: false
     default: null
     aliases: []
   state:
+    description:
+      - Set the state of the backend.
+      - C(healthy) and C(sick) force the state of the backend to that particular value.
+      - C(auto) tells varnish to use it's standard health check probes to determine the health.
     required: false
     default: null
     choices: ['auto', 'healthy', 'sick']
@@ -34,14 +42,12 @@ EXAMPLES = '''
 # Disable a backend from varnish
 
 - varnishadm:
-    backend=web_backend_broken
-    state=sick
+    backend=web_backend_broken state=sick
 
 # Enable a backend from varnish
 
 - varnishadm:
-    backend=web_backend_working
-    state=auto
+    backend=web_backend_working state=auto
 '''
 
 

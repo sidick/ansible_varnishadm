@@ -61,7 +61,7 @@ def get_state(module, secret, backend, name):
     args = ''
 
     if name:
-      args += ' -n %s ' % name
+        args += ' -n %s ' % name
 
     cmd = "varnishadm -S '%s' %s backend.list %s" % (secret, args, backend)
 
@@ -85,7 +85,7 @@ def change_state(module, secret, state, backend, name):
     args = ''
 
     if name:
-      args += ' -n %s ' % name
+        args += ' -n %s ' % name
 
     current_state = get_state(module, secret, backend, name)
 

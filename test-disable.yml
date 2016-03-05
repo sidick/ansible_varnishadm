@@ -5,5 +5,5 @@
   gather_facts: False
   become: False
   vars_files:
-    - group_vars/vault
+    - group_vars/varnishadm
 

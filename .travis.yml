@@ -6,14 +6,12 @@ sudo: required
   
 install:
   - "pip install -r requirements.txt"
-  - "make ci"
-  - "echo aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa >/tmp/varnish_secret"
-  - "/usr/sbin/varnishd -S /tmp/varnish_secret -f varnish.vcl -a :8000 -n /tmp/"
-
-before_script:
   - curl https://repo.varnish-cache.org/GPG-key.txt | sudo apt-key add -
   - echo "deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
   - sudo apt-get install varnish
+  - "make ci"
+  - "echo aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa >/tmp/varnish_secret"
+  - "/usr/sbin/varnishd -S /tmp/varnish_secret -f varnish.vcl -a :8000 -n /tmp/"
 
 script: ansible-playbook -i ./hosts test-varnishadm.yml

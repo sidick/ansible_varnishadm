@@ -7,3 +7,13 @@
   vars_files:
     - group_vars/varnishadm
 
+  tasks:
+  - name: Set backend health to sick
+    varnishadm:
+      backend: test_backend
+      state: sick
+
+  - name: Set backend health to auto
+    varnishadm:
+      backend: test_backend
+      state: auto

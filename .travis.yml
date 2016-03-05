@@ -3,6 +3,10 @@ cache: pip
 python:
   - "2.7"
 sudo: false
+addons:
+  apt:
+    packages:
+    - varnish
 install:
   - "pip install -r requirements.txt"
   - "make ci"

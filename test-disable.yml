@@ -12,8 +12,16 @@
     varnishadm:
       backend: test_backend
       state: sick
+      secret: /tmp/varnish_secret
+
+  - name: Set backend health to healthy
+    varnishadm:
+      backend: test_backend
+      state: healthy
+      secret: /tmp/varnish_secret
 
   - name: Set backend health to auto
     varnishadm:
       backend: test_backend
       state: auto
+      secret: /tmp/varnish_secret

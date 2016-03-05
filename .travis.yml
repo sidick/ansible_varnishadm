@@ -17,6 +17,6 @@ install:
   - "pip install -r requirements.txt"
   - "make ci"
   - "echo aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa >/tmp/varnish_secret"
-  - "/usr/sbin/varnishd -S /tmp/varnish_secret -f varnish.vcl -a :8000"
+  - "/usr/sbin/varnishd -S /tmp/varnish_secret -f varnish.vcl -a :8000 -n /tmp/"
 before_script:
 script: ansible-playbook -i ./hosts test-varnishadm.yml

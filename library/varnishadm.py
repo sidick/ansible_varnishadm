@@ -61,9 +61,9 @@ def get_state(module, secret, backend, name):
     args = ''
 
     if name:
-        args += ' -n %s ' % name
+        args += ' -n {0!s} '.format(name)
 
-    cmd = "varnishadm -S '%s' %s backend.list %s" % (secret, args, backend)
+    cmd = "varnishadm -S '{0!s}' {1!s} backend.list {2!s}".format(secret, args, backend)
 
     (rc, out, err) = module.run_command(cmd)
     if rc:
@@ -85,14 +85,14 @@ def change_state(module, secret, state, backend, name):
     args = ''
 
     if name:
-        args += ' -n %s ' % name
+        args += ' -n {0!s} '.format(name)
 
     current_state = get_state(module, secret, backend, name)
 
     if state == current_state:
         return module.exit_json(changed=False)
 
-    cmd = "varnishadm -S '%s' %s backend.set_health %s %s" % (secret, args, backend, state)
+    cmd = "varnishadm -S '{0!s}' {1!s} backend.set_health {2!s} {3!s}".format(secret, args, backend, state)
 
     (rc, out, err) = module.run_command(cmd)
 

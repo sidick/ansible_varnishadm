@@ -1,10 +1,28 @@
+---
+
 language: python
 cache: pip
+dist: trusty
 python:
   - "2.7"
-sudo: false
+sudo: required
+
+notifications:
+  email:
+    - simond@irrelevant.org
+
 install:
   - "pip install -r requirements.txt"
+  - curl https://repo.varnish-cache.org/GPG-key.txt | sudo apt-key add -
+  - echo "deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update -qq
+  - sudo apt-get install -y varnish
   - "make ci"
+  - "echo aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa >/tmp/varnish_secret"
+  - "/usr/sbin/varnishd -S /tmp/varnish_secret -f varnish.vcl -a :8000 -n /tmp/ -T localhost:6082"
+  - sleep 2
+  - varnishadm -S /tmp/varnish_secret -T localhost:6082 backend.list
+  - varnishadm -S /tmp/varnish_secret -T localhost:6082 backend.set_health test_backend auto
+
 before_script:
 script: ansible-playbook -i ./hosts test-varnishadm.yml
